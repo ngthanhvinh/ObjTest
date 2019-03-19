@@ -1,2 +1,1 @@
-cd backend
-python server.py
+python-3.6.7
