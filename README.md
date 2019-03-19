@@ -1,3 +1,3 @@
-# Gender Test
+# ObjTest
 
-An AI/ML project aiming on gender classification via face images.
+A website enable to recognize objects through images.
