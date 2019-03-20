@@ -1,30 +1,22 @@
-from http.server import HTTPServer, BaseHTTPRequestHandler
-from io import BytesIO
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from classifier import *
 
-class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+app = Flask(__name__)
+CORS(app)
 
-    def do_GET(self):
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(b'Welcome to port 8000!')
+@app.route('/', methods=['POST'])
+def handler():
+    if request.method != 'POST':
+        # Error 405 Method Not Allowed
+        return 405
+    try:
+        file = request.files['file']
+    except:
+        file = None
+    print(file)
+    predict = classifier(file)
+    return jsonify(predict=predict), 200
 
-    def do_POST(self):
-        # handle POST upload
-        content_length = int(self.headers['Content-Length'])
-        body = self.rfile.read(content_length)
-        self.send_response(200)
-        self.end_headers()
-        
-        # get uploaded file from POST protocol
-        img_file = body.files.file[0]
-        # pass the image through the classifier
-        predict = classifier(img_file)
-        # response the predictions to the front-end
-        response = BytesIO()
-        response.write(predict)
-        self.wfile.write(response.getvalue())
-
-httpd = HTTPServer(('localhost', 8000), SimpleHTTPRequestHandler)
-print("Connecting to port 8000!")
-httpd.serve_forever()
+if __name__ == "__main__":
+    app.run()
