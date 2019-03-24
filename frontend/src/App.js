@@ -1,33 +1,56 @@
 import React, { Component } from 'react';
+import "./bootstrap/css/bootstrap.css";
+import PredictionsView from "./components/PredictionsView.js";
+import ImageView from "./components/ImageView.js";
+import Header from "./components/Header.js";
+import Footer from "./components/Footer.js";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgFile: null
+      imgFile: null,
+      spinner: false,
+      disabled: true,
+      names: [],
+      probs: []
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  handleChange(event) {
+  onChange(event) {
     event.preventDefault();
+    if (event.target.files.length === 0) {
+      return;
+    }
     this.setState({
-      imgFile: URL.createObjectURL(event.target.files[0])
+      imgFile: URL.createObjectURL(event.target.files[0]),
+      disabled: false,
+      spinner: false
     });
+    this.uploadInput = event.target.files[0];
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  onSubmit() {
     var data = new FormData();
-    data.append('file', this.uploadInput.files[0]);
+    data.append('file', this.uploadInput);
 
+    this.setState({
+      spinner: true,
+      disabled: true
+    });
     fetch('http://localhost:5000', {
             method: 'POST',
             body: data
           }).then(response => {
               response.json().then(body => {
-                console.log(body)
+                this.setState({
+									names: body.names,
+                  probs: body.probs,
+                  spinner: false,
+                  disabled: true
+								});
               }
             )
           });
@@ -36,16 +59,25 @@ class App extends Component {
   render() {
     return (
       <div>
-        <img src={this.state.imgFile} />
-        <form onSubmit={this.handleSubmit}>
-          <input 
-            type="file"
-            ref={ref => {
-              this.uploadInput = ref;
-            }}
-            onChange={this.handleChange}/>
-          <button>Upload</button>
-        </form>
+        <Header />
+        <div className="container">
+          <div className="row mx-auto">
+            <div className="col-1" />
+            <div className="col-4">
+              <PredictionsView 
+                names={this.state.names} 
+                probs={this.state.probs} 
+                disabled={this.state.disabled}
+                onSubmit={this.onSubmit}
+                spinner={this.state.spinner}
+              />
+            </div>
+            <div className="col-6">
+                <ImageView imgFile={this.state.imgFile} onChange={this.onChange} disabled={this.state.spinner}/>
+            </div>
+          </div>
+        </div>
+	<Footer />
       </div>
     );
   }
