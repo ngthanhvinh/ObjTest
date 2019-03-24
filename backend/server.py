@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
 import os
+from werkzeug import secure_filename
+import datetime
 
 '''
 	VGG16 model
@@ -52,19 +54,30 @@ CORS(app)
 UPLOAD_DIR = os.getcwd() + '/img'
 HOST='0.0.0.0'
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['POST'])
 def handler():
     if request.method != 'POST':
         # Error 405 Method Not Allowed
         return 405
     
+    format = "%Y-%m-%dT%H:%M:%S"
+    now = datetime.datetime.utcnow().strftime(format)
+    
     img_file = request.files['file']
-    path = os.path.join(UPLOAD_DIR, img_file.filename)
+    
+    # create a new unique file name
+    filename = now + '_' + img_file.filename
+    filename = secure_filename(filename)
+    
+    # save the image
+    path = os.path.join(UPLOAD_DIR, filename)
     img_file.save(path)
 
     # get the predictions from the classifier
     names, probs = classifier(path)
     
+    # delete the file after processing to save the memory
+    os.remove(path)
     return jsonify(names=names, probs=probs), 200
 
 
