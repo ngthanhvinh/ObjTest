@@ -54,7 +54,11 @@ CORS(app)
 UPLOAD_DIR = os.getcwd() + '/img'
 HOST='0.0.0.0'
 
-@app.route('/', methods=['POST'])
+@app.route("/")
+def access():
+return "This is ObjTest back-end!"
+
+@app.route('/upload', methods=['POST'])
 def handler():
     if request.method != 'POST':
         # Error 405 Method Not Allowed
