@@ -36,7 +36,7 @@ pip install -r requirements.txt
 python3 server.py
 ```
 
-The back-end server is hosted at: [localhost:5000](localhost:5000).
+The back-end server is hosted at: [localhost:5000](http://localhost:5000).
 
 ### Run React front-end
 
@@ -48,5 +48,5 @@ npm install
 npm start
 ```
 
-Access [localhost:3000](localhost:3000) to enjoy the React app!
+Access [localhost:3000](http://localhost:3000) to enjoy the React app!
 
