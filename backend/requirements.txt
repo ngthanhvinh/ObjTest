@@ -2,5 +2,4 @@ tensorflow
 keras
 Flask
 Flask-Cors
-gunicorn
 werkzeug

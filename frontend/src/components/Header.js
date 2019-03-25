@@ -10,7 +10,7 @@ function Header() {
 				ObjTest
 			</span>
 			<span className="description text-inline text-right">
-				A website utilizing VGG16 pre-trained model to classify the object in images
+				A web app using the VGG16 pre-trained model to classify the object in images
 			</span>
 		</div>
 	</nav>
