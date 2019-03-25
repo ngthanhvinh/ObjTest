@@ -54,10 +54,12 @@ CORS(app)
 UPLOAD_DIR = os.getcwd() + '/img'
 HOST='0.0.0.0'
 
+# Welcome!
 @app.route("/")
 def access():
-return "This is ObjTest back-end!"
+	return "Welcome to ObjTest API!", 200
 
+# Handle uploads
 @app.route('/upload', methods=['POST'])
 def handler():
     if request.method != 'POST':
