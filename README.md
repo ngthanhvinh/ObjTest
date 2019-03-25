@@ -2,7 +2,7 @@
 
 **ObjTest** is a web app enable to predict the object in images. 
 
-The app does not prioritize speed and optimization, but instead focuses more on the best web experience.
+The app does not prioritize speed and optimization, but instead focuses more on the user experience.
 
 **Utilizing:** 
 * [Flask](http://flask.pocoo.org/)
