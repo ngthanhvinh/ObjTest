@@ -40,7 +40,7 @@ class App extends Component {
       spinner: true,
       disabled: true
     });
-    fetch('http://localhost:8000/upload', {
+    fetch('http://localhost:5000/upload', {
             method: 'POST',
             body: data
           }).then(response => {
