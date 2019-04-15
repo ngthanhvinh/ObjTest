@@ -1,6 +1,6 @@
 # ObjTest
 
-**ObjTest** is a web app enable to predict the object in images. 
+**ObjTest** is a web app which can predict the object in images (with up to 1000 classes of object).
 
 The app does not prioritize speed and design, it is just a fun and random experiment of mine regarding to the field of machine learning and web development. :laughing:
 
@@ -18,7 +18,7 @@ The app does not prioritize speed and design, it is just a fun and random experi
 ![After predicting](image2.png)
 
 
-## How to run?
+## How to run the app locally?
 First, clone this repository:
 
 ```bash
@@ -36,7 +36,7 @@ pip install -r requirements.txt
 python3 server.py
 ```
 
-The back-end server is hosted at: [localhost:5000](http://localhost:5000).
+The back-end server is hosted at: [http://localhost:5000](http://localhost:5000).
 
 ### Run React front-end
 
@@ -48,5 +48,7 @@ npm install
 npm start
 ```
 
-Access [localhost:3000](http://localhost:3000) to enjoy the React app!
+Access [http://localhost:3000](http://localhost:3000) and enjoy the React app!
 
+### Note
+It may take some time to load...
